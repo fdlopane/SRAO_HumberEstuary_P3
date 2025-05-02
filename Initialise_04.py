@@ -70,15 +70,15 @@ def Generate_Availability(Data_Folder):
 	
 	time_Gen_Aval = time.asctime()
 	
-	print "Generate Availability function starts at: " , time_Gen_Aval
-	print
-	print "Opening input raster files..."
-	print
+	print("Generate Availability function starts at: " , time_Gen_Aval)
+	print()
+	print("Opening input raster files...")
+	print()
 	
 	# File to be created:
 	available_file = "Available.tif"
 
-	print "File pointers creation..."
+	print("File pointers creation...")
 	
 	# Import the constraints rasters to identify sites for the lookup
 	border_pointer    	 = rasterIO.opengdalraster(Data_Folder+border_file_name)
@@ -86,40 +86,40 @@ def Generate_Availability(Data_Folder):
 	Green_areas_pointer	 = rasterIO.opengdalraster(Data_Folder+Green_areas_file_name)
 	water_pointer   	 = rasterIO.opengdalraster(Data_Folder+water_file_name)
 
-	print "File pointers created."
-	print
+	print("File pointers created.")
+	print()
 	
 	# Creation of rasters:
-	print "raster creation..."
+	print("raster creation...")
 	
 	border_raster      = rasterIO.readrasterband(border_pointer,1,0,False)
-	print "border raster created"
+	print("border raster created")
 	buffer_raster      = rasterIO.readrasterband(buffer_pointer,1,0,False)
-	print "buffer raster created"
+	print("buffer raster created")
 	Green_areas_raster    = rasterIO.readrasterband(Green_areas_pointer,1,0,False)
-	print "Green_areas raster created"
+	print("Green_areas raster created")
 	water_raster       = rasterIO.readrasterband(water_pointer,1,0,False)
-	print "water raster created"
+	print("water raster created")
 	print
 	
-	print "readrastermeta creation..."	
+	print("readrastermeta creation..."	)
 	border_driver, border_XSize, border_YSize, border_proj_wkt, border_geo_t_params = rasterIO.readrastermeta(border_pointer)
-	print "readrastermeta created."
-	print
+	print("readrastermeta created.")
+	print()
 	
 	# Initialise the availability raster with all zeros
 	# __raster_name__.shape returns a tuple with the X and Y dimensions of the raster
 	# dtype = np.int it is optional, I assign the integer type to save space and keep it light
-	print "availability raster initialisation"
-	print
+	print("availability raster initialisation")
+	print()
 	availability_raster = np.zeros(border_raster.shape, dtype = np.int)
 	
 	time_avl_ras = time.asctime()
-	print "Creation of availability raster, starts at: " , time_avl_ras
+	print("Creation of availability raster, starts at: " , time_avl_ras)
 	
 	for x in range(0,border_XSize):
 		for y in range(0,border_YSize):
-			# print "x = ", x, "y = ", y
+			# print("x = ", x, "y = ", y)
 			if border_raster[y,x] == 1:
 				if buffer_raster[y,x] == 1:
 					if Green_areas_raster[y,x] != 1:
@@ -132,8 +132,8 @@ def Generate_Availability(Data_Folder):
 	rasterIO.writerasterbands(Data_Folder+available_file, 'GTiff', border_XSize, border_YSize, border_geo_t_params, 27700, None, availability_raster)
 	
 	time_avl_ras_end = time.asctime()
-	print "Availability raster created at: " , time_avl_ras_end
-	print
+	print("Availability raster created at: " , time_avl_ras_end)
+	print()
 
 
 def Generate_Lookup(Data_Folder, Results_Folder, shapefilefile):
@@ -144,13 +144,13 @@ def Generate_Lookup(Data_Folder, Results_Folder, shapefilefile):
 		available_centroids_file = 'Available_centroids.shp'
 	else:
 		if os.path.isfile(os.path.join(Data_Folder, 'Available.tif')):
-			print
-			print "Available centroid shape file is missing. You must create it!"
+			print()
+			print("Available centroid shape file is missing. You must create it!")
 			quit()
 		else:
 			Generate_Availability(Data_Folder)
-			print
-			print "Available centroid shape file is missing. You must create it!"
+			print()
+			print("Available centroid shape file is missing. You must create it!")
 			quit()
 		
 	'''else:
@@ -181,7 +181,7 @@ def Generate_Lookup(Data_Folder, Results_Folder, shapefilefile):
 	#save to a txt file in Results Folder so other modules can load it
 	np.savetxt(os.path.join(Results_Folder, "lookup.txt"), Lookup, delimiter=',', newline='\n') 	
 	
-	print
+	print()
 	return Lookup
 
 
@@ -218,7 +218,7 @@ def Generate_Lookup_RurSubUrb(Data_Folder, Results_Folder, shapefilefile):
 	if os.path.isfile(os.path.join(Data_Folder, 'Available_centroids_RurSubUrb.shp')):
 		available_centroids_file = 'Available_centroids_RurSubUrb.shp'
 	else:
-		print "Available_centroids_RurSubUrb does not exist! Create it in ArcGIS!"
+		print("Available_centroids_RurSubUrb does not exist! Create it in ArcGIS!")
 	
 	centroids_RurSubUrb = fiona.open(Data_Folder+shapefilefile)
 	
@@ -241,7 +241,7 @@ def Generate_Lookup_RurSubUrb(Data_Folder, Results_Folder, shapefilefile):
 	#save to a txt file in Results Folder so other modules can load it
 	np.savetxt(os.path.join(Results_Folder, "Lookup_RurSubUrb.txt"), Lookup_RurSubUrb, delimiter=',', newline='\n') 	
 	
-	print
+	print()
 	return Lookup_RurSubUrb
 	
 
@@ -264,7 +264,7 @@ def Generate_DevPlan(Development_Plan, Data_Folder, External_Results_Folder):
          j, i = tuple(Lookup_local[t])
          
          # Add the proposed development to the development plan
-         #print Development_Plan[j]
+         #print(Development_Plan[j])
          DevPlan[int(j), int(i)] = Development_Plan[t]
          
      # multiplying it to try stop it being square in the raster
@@ -311,15 +311,15 @@ def Generate_WarehousePlan(No_Available, Warehouses_Max, Warehouses_Min, Data_Fo
             
 		# If the iteration has gone through with no change return false   
 		if check_count > 100000:
-			print "Caught hanging in Generate_WarehousePlan"           
+			print("Caught hanging in Generate_WarehousePlan"           )
 			return False
 	# sys.stdout.write("Generation of warehouse plan Completed.\r")
 	
 	if sum(Warehouse_Plan) == 0:
 		raise ValueError('Sum of warehouse plan = 0. No sites allocated in Generate_WarehousePlan function.')
 	
-	# print sum(Warehouse_Plan)
-	# print "Generate_WarehousePlan"
+	# print(sum(Warehouse_Plan))
+	# print("Generate_WarehousePlan")
 	
 	return Warehouse_Plan
 
@@ -373,7 +373,7 @@ def Generate_WarehousePlan_Cluster_Ranking(No_Available, Warehouses_Max, Warehou
 					
 				# If the iteration has gone through with no change return false   
 				if check_count > 100000:
-					print "Caught hanging in Generate_WarehousePlan"           
+					print("Caught hanging in Generate_WarehousePlan"           )
 					return False
 	else:
 		for n in range(1,Number_of_warehouses+1):
@@ -407,8 +407,8 @@ def Generate_WarehousePlan_Cluster_Ranking(No_Available, Warehouses_Max, Warehou
 	if sum(Warehouse_Plan) == 0:
 		raise ValueError('Sum of warehouse plan = 0. No sites allocated in Generate_WarehousePlan function.')
 	
-	# print sum(Warehouse_Plan)
-	# print "Generate_WarehousePlan"
+	# print(sum(Warehouse_Plan))
+	# print("Generate_WarehousePlan")
 	
 	return Warehouse_Plan
 
@@ -466,14 +466,14 @@ def Generate_WarehousePlan_check_distance(No_Available, Warehouses_Max, Warehous
             
         # If the iteration has gone through with no change return false   
 		if check_count > 100000:
-			print "Caught hanging in Generate_WarehousePlan_check_distance"           
+			print("Caught hanging in Generate_WarehousePlan_check_distance"           )
 			return False
 	
 	if sum(Warehouse_Plan) == 0:
 		raise ValueError('Sum of warehouse plan = 0. No sites allocated in Generate_WarehousePlan_check_distance function.')
 	
-	# print "Generation of warehouse plan completed"
-	# print
+	# print("Generation of warehouse plan completed")
+	# print()
 	return Warehouse_Plan
 
 
@@ -481,12 +481,12 @@ def Generate_Proposed_Sites(Warehouse_Plan, Results_Folder, Lookup):
 	# Returns a list of the coordinates of the proposed sites.
 	# Lookup = (np.loadtxt(os.path.join(Results_Folder, "lookup.txt"),dtype='int',delimiter=",")).tolist() # reads the content of the .txt and saves it in Lookup
 
-	# print sum(Warehouse_Plan)
-	# print "Generate_Proposed_Sites"
+	# print(sum(Warehouse_Plan))
+	# print("Generate_Proposed_Sites")
 
 	# if sum(Warehouse_Plan) == 0:
-		# print sum(Warehouse_Plan)
-		# print "Warehouse_Plan = ", Warehouse_Plan
+		# print(sum(Warehouse_Plan))
+		# print("Warehouse_Plan = ", Warehouse_Plan)
 		# raise ValueError('Sum of warehouse plan = 0. When called in Generate_Proposed_Sites function. (Initialise)')
 	
 	Proposed_Sites_List = []

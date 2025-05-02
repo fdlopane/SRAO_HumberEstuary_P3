@@ -19,11 +19,11 @@ os.system('cls')  # clears screen
 import time
 
 start_time = time.asctime()
-print "Program: " , program_name
-print "Starts at: " , start_time
-print
+print("Program: " , program_name)
+print("Starts at: " , start_time)
+print()
 
-# print "importing modules..."
+# print("importing modules...")
 import networkx as nx
 import rasterIO
 import numpy as np
@@ -33,8 +33,8 @@ import shapely.geometry
 import csv
 import sys
 import math
-# print "Modules imported."
-# print
+# print("Modules imported.")
+# print()
 
 data_folder 	= "../Data/Hull_500m_resolution/"
 results_folder	= "./Results_500m_resolution"
@@ -43,7 +43,7 @@ Road_Network_shapefile   = 'Road_Network_Flood.shp'
 Available_centroids_shapefile = 'Available_centroids.shp'
 Destinations_shapefile   = 'Strategic_infrastructure.shp'
 
-print "Importing road network and target nodes..."
+print("Importing road network and target nodes...")
 # Road network which forms the path
 Road_Network = nx.read_shp(data_folder+Road_Network_shapefile)
 
@@ -60,8 +60,8 @@ Available    = rasterIO.readrasterband(file_pointer,1)
 # Extracting the geotrans which is necessary for calculating the centroids
 # of potential development sites
 d,X,Y,p,geotrans = rasterIO.readrastermeta(file_pointer)
-print "Road network and target nodes imported."
-print
+print("Road network and target nodes imported.")
+print()
 
 def Gen_List_Proposed_Sites(Available_Sites):
     # Create a list of all the sites which we want to calculate the 
@@ -88,7 +88,7 @@ def Conv_2_Coords(list_of_sites, geo_t_params):
 		# coord = coord of raster corner + (cell_coord * cell_size) + (cell_size/2)
 		x_coord = geo_t_params[0] + (x*geo_t_params[1]) + (geo_t_params[1]/2)
 		y_coord = geo_t_params[3] - (y*geo_t_params[1]) + (geo_t_params[5]/2)
-		#print y_coord, x_coord
+		#print(y_coord, x_coord)
 		
 		# Have to work in x and y I think
 		node_coord=(x_coord, y_coord)
@@ -103,8 +103,8 @@ def Conv_2_Coords(list_of_sites, geo_t_params):
 		
 	# Write .csv file:
 	#np.savetxt('P:/RLO/Python_Codes/Hull_Case_Study/Results/Available_Sites.csv', array, delimiter = ',')
-	#print "Conv_2_Coords txt file saved"
-	print
+	#print("Conv_2_Coords txt file saved")
+	print()
 	return site_nodes
 
 
@@ -113,7 +113,7 @@ def write_shp_centroids(site_nodes):
 	# available cells.
 	# - See http://pygis.blogspot.co.uk/2012/10/pyshp-attribute-types-and-point-files.html
 	
-	print "Writing Available_centroids shapefile..."
+	print("Writing Available_centroids shapefile...")
 	import shapefile as shp
 	
 	#Set up shapefile writer and create empty fields
@@ -130,7 +130,7 @@ def write_shp_centroids(site_nodes):
 	#Save shapefile
 	w.save(data_folder+Available_centroids_shapefile)
 	
-	print "Shapefile saved"
+	print("Shapefile saved")
 	
 	
 def calc_closest(new_node, node_list):
@@ -163,24 +163,24 @@ def Add_Edges(g, node, closest_node):
 
 
 def Calc_Short_Dist_network(Available_centroids, Target_Nodes, Road_Network):
-	print "Beginning Calculate Fitness"
-	print
+	print("Beginning Calculate Fitness")
+	print()
 	
 	Road_Network = Road_Network.to_undirected()
-	print "Road network converted to undirected"
+	print("Road network converted to undirected")
 	
 	# Add the Target_Nodes to the road network and create an edge between them and the closest road network node
 	Add_Nodes_To_Network(Target_Nodes, Road_Network)
 	
-	print "Add_Nodes_To_Network (1/2 - target nodes): DONE"
-	print
-	print "Number of Available centroids = ", len(Available_centroids)
-	print
+	print("Add_Nodes_To_Network (1/2 - target nodes): DONE")
+	print()
+	print("Number of Available centroids = ", len(Available_centroids))
+	print()
 	Add_Nodes_To_Network(Available_centroids, Road_Network)
-	print "Add_Nodes_To_Network (2/2 - road nodes): DONE"
-	print
+	print("Add_Nodes_To_Network (2/2 - road nodes): DONE")
+	print()
 	
-	print "Calculating Shortest Distances for ", len(Available_centroids), " road nodes..."
+	print("Calculating Shortest Distances for ", len(Available_centroids), " road nodes...")
 	# Calculate the shortest distance from each site to a target node    
 	Dist_dict = {}
 	
@@ -207,38 +207,38 @@ def Calc_Short_Dist_network(Available_centroids, Target_Nodes, Road_Network):
 		if site_count%1000 == 0:
 			prog = int(round(site_count*100/len(Available_centroids)))
 			sys.stdout.write("Progress: %d %% \r" %prog)
-			# print ("iteration number %d of %d" %(site_count, len(Available_centroids)))
+			# print("iteration number %d of %d" %(site_count, len(Available_centroids)))
 	
 	# if len(Dist_dict)!= (len(Available_centroids) * len(Target_Nodes)): # len(dict) returns the number of the keys
-	print
-	print "#####################################"
-	print "WARNING: Check lenght of final dictionary"
-	print "#####################################"
+	print()
+	print("#####################################")
+	print("WARNING: Check lenght of final dictionary")
+	print("#####################################")
 	
 	return Dist_dict, list_points_noPath
 
  
 if __name__ == '__main__': 
     
-	print "Generating Sites to Calculate"
-	print
+	print("Generating Sites to Calculate")
+	print()
 	# Create a list of all the sites which we want to calculate the shortest pathfdist_values_Available.csv to:
 	Sites_to_Calculate = Gen_List_Proposed_Sites(Available)
 	
 	if os.path.isfile(os.path.join(data_folder, Available_centroids_shapefile)):
-		print "Skip the generation of centroids shapefile because this file already exists."
+		print("Skip the generation of centroids shapefile because this file already exists.")
 	else:
-		# Print centroids shapefile
+		# Print(centroids shapefile)
 		Dev_Nodes = Conv_2_Coords(Sites_to_Calculate, geotrans)
 		write_shp_centroids(Dev_Nodes)
 	
 	Distances_dict, NoPath_Nodes_list = Calc_Short_Dist_network(Available_centroids, Target_Nodes, Road_Network)
 	e_time = time.asctime()
-	print "Dictionary saved in a variable at: " , e_time
-	print
+	print("Dictionary saved in a variable at: " , e_time)
+	print()
 	
-	# Print dist_dictionary in a csv file
-	print "Writing dictionary in a .csv file..."
+	# Save dist_dictionary in a csv file
+	print("Writing dictionary in a .csv file...")
 	with open('./Results_500m_resolution/Dictionary_cells_targets_Flood', 'wb') as csv_file:
 		writer = csv.writer(csv_file)
 		wr_count = 0
@@ -252,12 +252,12 @@ if __name__ == '__main__':
 					# prog = int(round(wr_count*100/len(Distances_dict)))
 					# print ("Progress: %d %%" %prog)
 					sys.stdout.write("Written row number %d of %d\r" %(wr_count, len(Distances_dict)*len(Sites_to_Calculate)))
-	print
+	print()
 	
-	# print txt file with nodes with no path
+	# Save txt file with nodes with no path
 	# np.savetxt(os.path.join(results_folder, "NoPath_Nodes_Flood.txt"), NoPath_Nodes_list, delimiter=',', newline='\n') 
 	
-	print "Ran"
+	print("Ran")
 	
 	end_time = time.asctime()
-	print "Program terminates at: " , end_time
+	print("Program terminates at: " , end_time)

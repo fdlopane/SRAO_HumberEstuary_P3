@@ -35,10 +35,10 @@ def Check_Distance(Warehouse_Plan, Lookup, Min_distance):
 					dist_list.append(d)
 
 		if min(dist_list) < Min_distance:
-			# print "too close: ", min(dist_list)
+			# print("too close: ", min(dist_list))
 			return False
 		else:
-			# print "distance check passed"
+			# print("distance check passed")
 			return True
 	else:
 		# in the Warehouse_Plan there is a number of warehouses < 2
@@ -119,7 +119,7 @@ def Check_TotWarehouse_Constraint(Warehouses_Max, Warehouses_Min, Results_Folder
 			# Save the updated list
 			np.savetxt(Results_Folder+"Warehouse_Constraint.txt", Updated_Retained_list, delimiter=',', newline='\n',fmt="%i")
 
-			# print '% of solutions retained after Total Dwellings Constraint', per_retained
+			# print('% of solutions retained after Total Dwellings Constraint', per_retained)
 			return offsprings
 		return wrapCheckBounds
 	return decCheckBounds
@@ -148,9 +148,9 @@ def Check_Constraint_Select(Warehouses_Max, Warehouses_Min, Results_Folder, Min_
 					if child[w] == 1:
 						war_list.append(Lookup[w])
 				
-				# print
-				# print "n. of warehouses of this child: " , len(war_list)
-				# print war_list
+				# print()
+				# print("n. of warehouses of this child: " , len(war_list))
+				# print(war_list)
 				
 				if len(war_list) > 1:
 					for i in war_list:
@@ -160,7 +160,7 @@ def Check_Constraint_Select(Warehouses_Max, Warehouses_Min, Results_Folder, Min_
 								dist_list.append(d)
 
 				
-					# print "min d = ", min(dist_list)
+					# print("min d = ", min(dist_list))
 					if min(dist_list) < Min_distance:
 						# if a warehouse plan doesn't have far enough warehouses it is removed from the offspring
 						offsprings.remove(child)
@@ -183,7 +183,7 @@ def Check_Constraint_Select(Warehouses_Max, Warehouses_Min, Results_Folder, Min_
 			# Save the updated list
 			np.savetxt(Results_Folder+"Warehouse_Constraint.txt", Updated_Retained_list, delimiter=',', newline='\n',fmt="%i")
 
-			# print '% of solutions retained after Total Dwellings Constraint', per_retained
+			# print('% of solutions retained after Total Dwellings Constraint', per_retained)
 			return offsprings
 		return wrapCheckConstr
 	return decCheckConstr
@@ -226,11 +226,11 @@ def Check_Constraint_Mate_Mutate(Warehouses_Max, Warehouses_Min, Results_Folder,
 							d =  ( (int(i[0][0]) - int(j[0][0]))**2 + (int(i[0][1]) - int(j[0][1]))**2 )**(0.5)
 							if d > 0:
 								dist_list.append([i,j,d])
-								# print "i = ",i
-								# print "int(i[0][0]) = " , int(i[0][0])
-								# print "int(j[0][0]) = " , int(j[0][0])
-								# print "int(i[0][1]) = " , int(i[0][1])
-								# print "int(j[0][1]) = " , int(j[0][1])
+								# print("i = ",i)
+								# print("int(i[0][0]) = " , int(i[0][0]))
+								# print("int(j[0][0]) = " , int(j[0][0]))
+								# print("int(i[0][1]) = " , int(i[0][1]))
+								# print)"int(j[0][1]) = " , int(j[0][1]))
 							
 				for wa in dist_list:
 					if wa[2] < Min_distance:
@@ -241,13 +241,13 @@ def Check_Constraint_Mate_Mutate(Warehouses_Max, Warehouses_Min, Results_Folder,
 				
 				"""
 				elif min(dist_list) < Min_distance:
-					# print "length child = ", len(child)
-					# print "j = ", j
-					# print "[j][0][0] = ",   [j][0][0]
-					# print "[j][0][0][0] = ",[j][0][0][0]
-					# print "[j][0][0][1] = ",[j][0][0][1]
-					# print "[j][0][1] = ",   [j][0][1]
-					# print "[j][0][1][0] = ",[j][0][1][0]
+					# print("length child = ", len(child))
+					# print("j = ", j)
+					# print("[j][0][0] = ",   [j][0][0])
+					# print("[j][0][0][0] = ",[j][0][0][0])
+					# print("[j][0][0][1] = ",[j][0][0][1])
+					# print("[j][0][1] = ",   [j][0][1])
+					# print("[j][0][1][0] = ",[j][0][1][0])
 					
 					# child[[j][0][1][0]] = 0
 					
@@ -272,7 +272,7 @@ def Check_Constraint_Mate_Mutate(Warehouses_Max, Warehouses_Min, Results_Folder,
 			# Save the updated list
 			np.savetxt(Results_Folder+"Warehouse_Constraint.txt", Updated_Retained_list, delimiter=',', newline='\n',fmt="%i")
 			"""
-			# print '% of solutions retained after Total Dwellings Constraint', per_retained
+			# print('% of solutions retained after Total Dwellings Constraint', per_retained)
 			return offsprings
 		return wrapCheckConstr
 	return decCheckConstr

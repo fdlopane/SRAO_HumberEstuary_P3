@@ -24,9 +24,9 @@ sys.path.append('C:/Python27/Lib/site-packages')
 import time
 start_time = time.asctime()
 
-# print "Program: " , program_name
-# print "Starts at: " , start_time
-print
+# print("Program: " , program_name)
+# print("Starts at: " , start_time)
+print()
 # print "Importing modules..."
 import fiona
 import pandas as pd
@@ -36,8 +36,8 @@ import Initialise_04 as Init
 import Constraints
 import math
 import numpy as np
-# print "Modules imported."
-print
+# print("Modules imported.")
+print()
 
 # Data_Folder     = "P:/RLO/Python_Codes/Data/Hull/"
 # Results_Folder  = "P:/RLO/Python_Codes/Hull_Case_Study/Results/"
@@ -141,7 +141,7 @@ def Calc_fdist_mean(Results_Folder, Proposed_Sites):
 	dist_dict_file = 'Dictionary_cells_targets'
 	available_centroids_file = 'Available_centroids.shp'
 	
-	# print "Creating the dataframe from csv file..."
+	# print("Creating the dataframe from csv file...")
 	cells_targets_df = pd.read_csv(Results_Folder+dist_dict_file, names=['X_Point','Y_Point','X_Target','Y_Target','Tot_dist'])
 
 	# Create a dataframe containing the coordinates of the proposed sites
@@ -157,8 +157,8 @@ def Calc_fdist_mean(Results_Folder, Proposed_Sites):
 
 	agg_dist = Selected_points_trgt_df['Tot_dist'].sum() # sum of all the values of the column
 	
-	# print "aggregate dist = " , agg_dist
-	# print "number of proposed sites for warehouse = " , len(Proposed_Sites)
+	# print("aggregate dist = " , agg_dist)
+	# print("number of proposed sites for warehouse = " , len(Proposed_Sites))
 	
 
 	########################################################################################
@@ -185,8 +185,8 @@ def Calc_fdist_mean(Results_Folder, Proposed_Sites):
 		
 	########################################################################################
 	
-	# print "Value of fdist = " , fdist
-	# print
+	# print("Value of fdist = " , fdist)
+	# print()
 	return fdist
 
 
@@ -403,9 +403,9 @@ def Calc_fcost(Proposed_Sites, Results_Folder):
 				fcost = fcost + cost_L_W
 	########################################################################################
 
-	# print "number of warehouses = " , n_warehouses
-	# print "annual rent price per warehouse = " , cost_per_cell
-	# print "value of fcost = " , fcost
+	# print("number of warehouses = " , n_warehouses)
+	# print("annual rent price per warehouse = " , cost_per_cell)
+	# print("value of fcost = " , fcost)
 	return fcost
 
 
@@ -472,7 +472,7 @@ def Calc_fcost_dim(Proposed_Sites, Results_Folder, Data_Folder, Min_W, Max_W):
 	# if len(list_of_needed_temp_def) == 0:
 		# raise ValueError('List_of_needed_temp_def is an empty list. Even if no flood defs needed, the value should be 0, not empty. (Evaluate module, cost function)')
 	
-	# print list_of_needed_temp_def
+	# print(list_of_needed_temp_def)
 	
 	########################################################################################
 	# If a Warehouse plan is empty, the variable Proposed_Sites will be empty.
@@ -496,13 +496,13 @@ def Calc_fcost_dim(Proposed_Sites, Results_Folder, Data_Folder, Min_W, Max_W):
 		fcost = 10000 # Meaningless very high number
 	########################################################################################
 
-	# print "value of fcost = " , fcost
+	# print("value of fcost = " , fcost)
 	return fcost
 
 
 def Calc_fcost_constant(Proposed_Sites):
 	# Constant fcost function
-	# print "Calculate fcost function."
+	# print("Calculate fcost function.")
 	
 	average_cost  = 55.0 # average cost per warehouse = 55£ per sq meter per annum
 	cell_dim	  = 2500.0 # squared meters
@@ -523,9 +523,9 @@ def Calc_fcost_constant(Proposed_Sites):
 		fcost = n_warehouses * cost_per_cell
 	########################################################################################
 
-	# print "number of warehouses = " , n_warehouses
-	# print "annual rent price per warehouse = " , cost_per_cell
-	# print "value of fcost = " , fcost
+	# print("number of warehouses = " , n_warehouses)
+	# print("annual rent price per warehouse = " , cost_per_cell)
+	# print("value of fcost = " , fcost)
 	return fcost
 
 
@@ -534,7 +534,7 @@ def Calc_fcost_constant(Proposed_Sites):
 	# fdist = Calc_fdist(Results_Folder, Proposed_Sites)
 	# fcost = Calc_fcost(Proposed_Sites)
 	
-# print	
-# print "Program" , program_name, " started at: " , start_time
+# print()
+# print("Program" , program_name, " started at: " , start_time)
 # end_time = time.asctime()
-# print "Program" , program_name, " terminates at: " , end_time
+# print("Program" , program_name, " terminates at: " , end_time)

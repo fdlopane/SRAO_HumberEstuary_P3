@@ -101,7 +101,7 @@ def Output_Run_Details(External_Results_Folder, Results_Folder, Modules, Operato
 
 	OutFile.close()
 	
-	print "Written Run Details File"
+	print("Written Run Details File")
 
 			
 def Normalise_MinMax(Sol_List):
@@ -289,7 +289,7 @@ def Plot(Pareto_Set, MOPO, Solutions, X_Axis, Y_Axis, Results_Folder, Norm):
 	plt.tight_layout() # automatically adjusts plot size
 	
 	plt.savefig(Output_File)
-	# print "Plotted Objective ", X_Axis, ' against ', Y_Axis
+	# print("Plotted Objective ", X_Axis, ' against ', Y_Axis)
 	plt.clf()    
 	plt.close    
 	
@@ -313,7 +313,7 @@ def Write_Rasters(Set, Results_Folder, Data_Folder, External_Results_Folder):
 	
 	# Specifying the format as OSGB 1936 = epsg projection 27700 - osgb 1936 / british national grid
 	epsg = 27700
-	# print len(Set)
+	# print(len(Set))
 	
 	Lookup_local = Init.Generate_Lookup_local(Data_Folder, External_Results_Folder)
 	
@@ -452,7 +452,7 @@ def Extract_ParetoFront_and_Plot(Solutions, Norm, External_Results_Folder, Resul
 	for PF in PF_Comb_list:
 		PO_PF = NonDom_Sort.Sort(Solutions, PF)
 		
-		# print 'The length of Pareto Front between ', Get_String(PF[0]),' and ',Get_String(PF[1]),' is ',len(PO_PF)
+		# print('The length of Pareto Front between ', Get_String(PF[0]),' and ',Get_String(PF[1]),' is ',len(PO_PF))
 		
 		Save_Pareto_Set(PO_PF, PF, Norm, Results_Folder)
 		Plot(PO_PF, MOPOs, Solutions, PF[0], PF[1], Results_Folder, Norm)
@@ -476,12 +476,12 @@ def Extract_Generation_Pareto_Fronts(Generations,MinMax_list, Results_Folder, Da
 	# Generate the generations results folder 
 	if not os.path.exists(Generations_Results_Folder): os.makedirs(Generations_Results_Folder)
 	# for gen in Generations:
-		# print "tl"
-		# print len(gen)
+		# print("tl")
+		# print(len(gen))
 	# Now for each generations
 	Gen_count = 0
 	for Gen in Generations:
-		# print "Processing Generation ", Gen_count
+		# print("Processing Generation ", Gen_count)
 		sys.stdout.write(" Processing generation %d \r" %Gen_count)
 		# Define the folder to save each particular generation to and create it
 		Each_Generations_Results_Folder = Generations_Results_Folder+'Generation_'+str(Gen_count)+'/'

@@ -65,7 +65,7 @@ def Create_centroids_shp(Results_Folder, centroids, n_shp):
 	# Transform the array into a Pandas dataframe
 	df = pd.DataFrame(centroids, columns=['X','Y'])
 
-	# print df
+	# print(df)
 
 	# Create a shapefile folder:
 	New_Shp_Folder = Results_Folder+'Clusters_Centroids_Shapefiles'
@@ -105,16 +105,16 @@ def Dist_RoadN_ClCentroids(Number_clusters, Results_Folder):
 	Sites_to_Calculate = DN.Gen_List_Proposed_Sites(Available)
 	
 	if os.path.isfile(os.path.join(data_folder, available_centroids_file)):
-		print "Skip the generation of centroids shapefile because this file already exists."
+		print("Skip the generation of centroids shapefile because this file already exists.")
 	else:
-		# Print centroids shapefile
+		# Save centroids shapefile
 		Dev_Nodes = DN.Conv_2_Coords(Sites_to_Calculate, geotrans)
 		DN.write_shp_centroids(Dev_Nodes)
 	
 	Distances_dict, NoPath_Nodes_list = DN.Calc_Short_Dist_network(Road_Nodes, Target_Nodes, Road_Network)
 	
 	# Save the dictionary in a .csv file:
-	print "Writing dictionary in a .csv file..."
+	print("Writing dictionary in a .csv file...")
 	with open(Results_Folder+'Dictionary_nodes_ClustersCentroids_'+str(Number_clusters), 'wb') as csv_file:
 		writer = csv.writer(csv_file)
 		wr_count = 0
@@ -125,11 +125,11 @@ def Dist_RoadN_ClCentroids(Number_clusters, Results_Folder):
 				wr_count = wr_count + 1
 				if wr_count%1000==0:
 					# prog = int(round(wr_count*100/len(Distances_dict)))
-					# print ("Progress: %d %%" %prog)
+					# print("Progress: %d %%" %prog)
 					sys.stdout.write("Written row number %d \r" %wr_count)
-	print
+	print()
 	
-	# print txt file with nodes with no path
+	# Save txt file with nodes with no path
 	np.savetxt(os.path.join(Results_Folder, "NoPath_Nodes_ClusterCentroids.txt"), NoPath_Nodes_list, delimiter=',', newline='\n') 	
 
 """
@@ -285,7 +285,7 @@ plt.scatter(centroids_x, centroids_y, marker='D', s=50)
 plt.show()
 
 # Print centroids coordinates
-print "Centroids coordinates:"
+print("Centroids coordinates:")
 for c in centroids:
 	print c
 """

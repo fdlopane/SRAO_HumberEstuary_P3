@@ -280,14 +280,14 @@ def newgdalraster(outfile, format, XSize, YSize, geotrans, epsg, num_bands, gdal
 		# import the standard EPSG ProjCRS
 		srs.ImportFromEPSG( epsg )
 		# apply the geotransformation parameters
-		#print geotrans
+		#print(geotrans)
 		dst_ds.SetGeoTransform( geotrans )
 		# export these features to embedded well Known Text in the GeoTiff
 		dst_ds.SetProjection( srs.ExportToWkt() )
 		return dst_ds
 	# catch error if no write method for format specified
 	else:
-		#print 'Error, GDAL %s driver does not support Create() method.' % outformat
+		#print('Error, GDAL %s driver does not support Create() method.' % outformat)
 		raise TypeError
 
 def newrasterband(dst_ds, rasterarray, band_num, NoDataVal=None):

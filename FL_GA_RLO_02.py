@@ -16,10 +16,10 @@ import os.path
 start_time = time.asctime()
 running_time_start = time.clock()
 
-print "Program: FL_GA_RLO"
-print "Starts at: " , start_time
-print
-print "Importing modules..."
+print("Program: FL_GA_RLO")
+print("Starts at: " , start_time)
+print()
+print()Importing modules..."
 
 # DEAP modules to facilitate the genetic algorithm
 from deap import algorithms
@@ -57,8 +57,8 @@ gc.disable()
 Modules = ['Initialisation', Init.__name__, 'Evaluation', Eval.__name__, 
            'Constraints', Constraint.__name__, 'Output', Output.__name__]
 		   
-print "All modules imported."
-print
+print("All modules imported.")
+print()
 
 """ DIRECTORIES
 """
@@ -90,12 +90,12 @@ Problem_Parameters = ['Spatial Resolution (m^2)', Spat_Res, 'Maximum warehouses'
 # Generate availability raster:
 if os.path.isfile(os.path.join(Data_Folder, "Available.tif")):
 	time_aval = time.asctime()
-	print "Skip the generation of Availability Raster because this file already exists in this directory."
-	print
+	print("Skip the generation of Availability Raster because this file already exists in this directory.")
+	print()
 else:
 	time_aval = time.asctime()
-	print "Availability raster, starts at: " , time_aval
-	print
+	print("Availability raster, starts at: " , time_aval)
+	print()
 	Init.Generate_Availability(Data_Folder)
 
 
@@ -106,18 +106,18 @@ else:
 
 if os.path.isfile(os.path.join(Results_Folder, "lookup.txt")):
 	time_lookup_s = time.asctime()
-	print "Generation of Lookup starts at: " , time_lookup_s
-	print "Skip the generation of Lookup because this file already exists in this directory."
+	print("Generation of Lookup starts at: " , time_lookup_s)
+	print("Skip the generation of Lookup because this file already exists in this directory.")
 	Lookup = (np.loadtxt(os.path.join(Results_Folder, "lookup.txt"),dtype='int',delimiter=",")).tolist() # reads the content of the .txt and saves it in Lookup
 	time_lookup_e = time.asctime()
-	print "Lookup uploaded at: " , time_lookup_e
+	print("Lookup uploaded at: " , time_lookup_e)
 else:
 	File_centroids = "Available_centroids.shp"
 	Lookup = Init.Generate_Lookup(Data_Folder, Results_Folder, File_centroids)
 	
 # So we know how long to make the chromosome
 No_Available = len(Lookup) # number of sites with space for development
-print "Number of available cells: " , No_Available 
+print("Number of available cells: " , No_Available )
 # (I called "No_Available" what Dan called "No_Undev")
 
 
@@ -278,10 +278,10 @@ GA_Parameters = ['Generations', NGEN, 'No of individuals to select', MU,
 
 def Genetic_Algorithm():    
     # Genetic Algorithm    
-    print "Beginning GA operation"
+    print("Beginning GA operation")
     
     # Create initialised population
-    print "Initialising"
+    print("Initialising")
     pop = toolbox.population(n=MU)
     
     # hof records a pareto front during the genetic algorithm
@@ -354,5 +354,5 @@ if __name__ == "__main__":
 
 	end_time = time.asctime()
 	
-	print "END. end time = ", end_time
-	print "Running time = ", int(running_time_end_minutes), " minutes"
+	print("END. end time = ", end_time)
+	print("Running time = ", int(running_time_end_minutes), " minutes")
