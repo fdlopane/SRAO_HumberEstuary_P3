@@ -1,0 +1,10 @@
+Available raster
+
+Features:
+- Inside regional borders
+- Within a 500 m distance from a major road. Major road = A or B road
+- Outside Floodzone. Floodzone = Floodzone2 + Floodzone3.
+- Outside built-up area
+- Outside woodland area
+- Outside surface water area
+- Outside roads footprint
